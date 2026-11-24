@@ -2,10 +2,10 @@
     detection to be executed over the Flask channel and deployed on
     localhost:5000.
 '''
-# Import Flask, render_template, request from the flask pramework package 
+# Import Flask, render_template, request from the flask pramework package
 from flask import Flask, request, render_template
 
-# import emotion detection 
+# import emotion detection
 from emotionDetection import emotion_detection
 
 app = Flask(__name__)
@@ -17,7 +17,6 @@ def emotion_detector():
         function. The output returned shows the label and its confidence 
         score for the provided text.
     '''
-    
     text_to_analyze = request.args.get("textToAnalyze")
     response = emotion_detection.emotion_detector(text_to_analyze)
 
@@ -31,7 +30,10 @@ def emotion_detector():
     else:
         formatted_emotions = "".join(items)
 
-    return "For the given statement, the system response is " + formatted_emotions + ". The dominant emotion is " + response['dominant_emotion'] + ".\n"
+    return "For the given statement, the system response is " + \
+        formatted_emotions + \
+        ". The dominant emotion is " + \
+        response['dominant_emotion'] + ".\n"
 
 @app.route("/")
 def render_index_page():
@@ -41,6 +43,4 @@ def render_index_page():
     return render_template('index.html')
 
 if __name__ == "__main__":
-    ''' This functions executes the flask app and deploys it on localhost:5000
-    '''
     app.run(host="0.0.0.0", port=5001)
